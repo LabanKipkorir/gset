@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CSETWebCore.DatabaseManager\CSETWebCore.DatabaseManager.csproj" />
+    <ProjectReference Include="..\CSETWeb_ApiCore\CSETWebCore.Api.csproj" />
+  </ItemGroup>
+
+</Project>

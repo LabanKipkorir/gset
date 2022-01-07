@@ -60,14 +60,22 @@ using System.Linq;
 using CSETWebCore.Interfaces.Crr;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
+using CSETWebCore.DatabaseManager;
+using System.Reflection;
 
 namespace CSETWeb_ApiCore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            
+            if (env.IsProduction())
+            {
+                DbManager dbManager = new DbManager(Assembly.GetExecutingAssembly().GetName().Version, Configuration.GetConnectionString("CSET_DB"));
+                dbManager.SetupDb();
+            }
         }
 
         public IConfiguration Configuration { get; }

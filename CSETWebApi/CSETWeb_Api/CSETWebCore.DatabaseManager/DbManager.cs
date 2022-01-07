@@ -18,7 +18,7 @@ namespace CSETWebCore.DatabaseManager
         private VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
         private static ILog log;
 
-        public DbManager(Version csetVersion)
+        public DbManager(Version csetVersion, string connectionString)
         {
             NewCSETVersion = csetVersion;
 

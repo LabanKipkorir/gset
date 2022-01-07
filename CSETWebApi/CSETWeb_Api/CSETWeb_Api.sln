@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.HelpersTests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.UpgradeLibrary", "CSETWebCore.UpgradeLibrary\CSETWebCore.UpgradeLibrary.csproj", "{CA7543E7-5573-41D6-9E37-3F9FEE43F8E7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.DatabaseManager.CLI", "CSETWebCore.DatabaseManager.CLI\CSETWebCore.DatabaseManager.CLI.csproj", "{C4700681-856C-4616-B3D1-BF458EDED38B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +182,16 @@ Global
 		{CA7543E7-5573-41D6-9E37-3F9FEE43F8E7}.NCUA|Any CPU.Build.0 = Release|Any CPU
 		{CA7543E7-5573-41D6-9E37-3F9FEE43F8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA7543E7-5573-41D6-9E37-3F9FEE43F8E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.localdb|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.localdb|Any CPU.Build.0 = Debug|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.localhost|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.localhost|Any CPU.Build.0 = Debug|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.NCUA|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.NCUA|Any CPU.Build.0 = Debug|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4700681-856C-4616-B3D1-BF458EDED38B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
