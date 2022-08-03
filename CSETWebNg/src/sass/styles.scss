@@ -23,9 +23,23 @@ SOFTWARE.
 */
 @import "./mixins";
 @import "./sal";
+@import "~@angular/material/theming";
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 @import "cset-font-styles.css";
 @import "cset2-font-styles.css";
+
+.theme-cset{
+  @import './themes/cset';
+}
+.theme-tsa{
+  @import './themes/tsa';
+}
+.theme-rra{
+  @import './themes/rra';
+}
+.theme-acet{
+  @import './themes/acet';
+}
 
 *:not(font) {
   font-family: "Roboto", sans-serif;
@@ -34,6 +48,109 @@ SOFTWARE.
 body {
   background-color: $gray-50;
   outline: none;
+}
+
+:focus {
+  outline: none;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+.nav-link:focus,
+.navbar-menu-header:focus {
+  border: 1px solid #3b68aa !important;
+  border-radius: 4px !important;
+  text-decoration: none !important;
+}
+
+a:focus {
+  text-decoration: underline !important;
+}
+
+a {
+  padding: 2px;
+}
+
+/////////// custom checkbox and radio styles
+.checkbox-custom,
+.radio-custom {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-custom,
+.checkbox-custom-label,
+.radio-custom,
+.radio-custom-label {
+  display: inline-block;
+  display: flex;
+  vertical-align: middle;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.checkbox-custom-label,
+.radio-custom-label {
+  position: relative;
+}
+
+.checkbox-custom+.checkbox-custom-label:before,
+.radio-custom+.radio-custom-label:before {
+  content: '';
+  background: #fff;
+  border: 2px solid $secondary-color;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  padding: 2px;
+  margin: 2px 10px 2px 2px;
+  text-align: center;
+}
+
+.checkbox-custom:checked+.checkbox-custom-label:before {
+  background: $secondary-color;
+  box-shadow: inset 0px 0px 0px 4px #fff;
+}
+
+.radio-custom+.radio-custom-label:before {
+  border-radius: 50%;
+}
+
+.radio-custom:checked+.radio-custom-label:before {
+  background: $secondary-color;
+  box-shadow: inset 0px 0px 0px 4px #fff;
+}
+
+.checkbox-custom:focus+.checkbox-custom-label,
+.radio-custom:focus+.radio-custom-label {
+  // outline: 3px solid #8bb4f8; /* focus style */
+  box-shadow: 0 0 3pt 2pt #8bb4f8;
+}
+
+//////////////////////////////////////////////////////////////////
+
+input[type="checkbox"]:focus {
+  border: 4px solid #8bb4f8 !important;
+  -webkit-box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
+  box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
+  border-radius: 4px;
+}
+
+input[type="radio"]:focus {
+  // outline: 4px solid #8bb4f8 !important;
+  border: 4px solid #8bb4f8 !important;
+  -webkit-box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
+  box-shadow: 0px 0px 1px 2px #8bb4f8 !important;
+  border-radius: 4px;
+}
+
+.btn:focus {
+  outline: dashed 2px lightgrey;
+  outline-offset: 5px;
 }
 
 .gutter-background {
@@ -217,6 +334,7 @@ label[required]::after {
   color: $gray-150;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .cset-footer-expand-button:hover,
@@ -545,17 +663,17 @@ table.td-align-top td {
 
 .btn-na {
   background-color: $white;
-  border-color: $primary-450;
-  color: $primary-450;
+  border-color: $na-color;
+  color: $na-color;
 }
 
 .btn-na.answer-selected:hover {
-  background-color: $primary-600;
+  background-color: $na-hover-color;
 }
 
 .btn-na.answer-selected,
 .btn-na:hover {
-  background-color: $primary-450;
+  background-color: $na-color;
   color: $active-text-color;
 }
 
@@ -571,6 +689,22 @@ table.td-align-top td {
 
 .btn-alt.answer-selected,
 .btn-alt:hover {
+  background-color: $alt-color;
+  color: $active-text-color;
+}
+
+.btn-inc {
+  background-color: $white;
+  border-color: $alt-color;
+  color: $alt-color;
+}
+
+.btn-inc.answer-selected:hover {
+  background-color: $alt-hover-color;
+}
+
+.btn-inc.answer-selected,
+.btn-inc:hover {
   background-color: $alt-color;
   color: $active-text-color;
 }
@@ -811,6 +945,16 @@ ul.mat-tree-node {
   width: auto !important;
 }
 
+.cset .mat-radio-label {
+  align-items: start !important;
+  padding-top: .2rem
+}
+
+.cset .mat-checkbox-inner-container {
+  margin: 4px 8px auto 0;
+}
+
+
 ////////////////////////////////////////////////////////////////////
 
 .display-none {
@@ -825,6 +969,7 @@ ul.mat-tree-node {
   background-color: $bg-debug-highlight;
   padding: 3px 4px;
   border-radius: 0.3rem;
+  margin-left: .5rem;
 }
 
 /* --- spinner styles -- */
@@ -1114,6 +1259,7 @@ ul.nav-tabs li.active button .tab-icon {
   margin-bottom: 0;
   border-radius: 0;
   min-height: auto;
+  padding:.7rem 1rem !important;
 }
 
 .navbar-toggler-icon {
@@ -1137,11 +1283,8 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .navbar-brand-override-bandaid {
-  float: left;
-  height: 50px;
-  font-size: 18px;
-  line-height: 20px;
-  padding: 5px;
+  display: flex;
+  padding: 3px 3px 6px 2px
 }
 
 .navbar-brand {
@@ -1169,33 +1312,64 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar .rll:hover,
 .navbar .rll:focus,
 .navbar a:focus,
-.navbar a:hover {
+.navbar a:hover,
+.navbar [mat-button]:focus,
+.navbar [mat-button]:hover {
   color: $white;
   background-color: transparent;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
-.navbar a.dropdown-item:focus,
-.navbar a.dropdown-item:hover .navbar .dropdown-item:focus,
-.navbar .dropdown-item:hover {
-  color: $primary-color;
-  background-color: $white;
-  text-decoration: none;
+
+
+// Menus
+.mat-menu-panel.menu-panel {
+  background-color: $primary-color;
+  min-height: 20px;
 }
-.navbar .dropdown-item,
-.navbar .dropdown-item {
+
+.menu-divider {
+  background-color: $gray-150;
+  margin: 8px 0;
+}
+
+.navbar-menu-header,
+.menu-panel [mat-menu-item].mat-menu-item {
   color: $gray-150;
   background-color: transparent;
-  text-decoration: none;
+  border: 1px solid transparent;
+  text-decoration: none !important;
+  height: 2.2rem;
+  line-height: 2.2rem;
 }
 
-.navbar .dropdown-item.disabled-menu-item,
-.navbar .dropdown-item.disabled-menu-item:focus,
-.navbar .dropdown-item.disabled-menu-item:hover {
+.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]),
+.menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]),
+.menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]),
+.menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
+  color: $primary-color;
+  background-color: $white;
+}
+
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
+.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
   background-color: transparent;
   cursor: not-allowed !important;
 }
+
+.menu-panel [mat-menu-item] .mat-menu-submenu-icon {
+  color: $gray-150;
+}
+
+.menu-panel [mat-menu-item]:focus .mat-menu-submenu-icon,
+.menu-panel [mat-menu-item]:hover .mat-menu-submenu-icon {
+  color: $primary-color;
+}
+
+
+
 
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
@@ -1535,6 +1709,16 @@ input[type="checkbox"] + label {
   color: #b18500f5 !important;
 }
 
+// Module Builder
+///////////////////////////////////////////////////////////////////////
+.mat-pseudo-checkbox::after {
+  color: $white;
+}
+
+.mat-pseudo-checkbox-checked {
+  background: $primary-900  !important;
+}
+
 // Questions Block
 ///////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 990px) {
@@ -1568,6 +1752,7 @@ input[type="checkbox"] + label {
   border-radius: 1em;
   background-color: $primary-50;
   border-bottom: 1px solid $gray-250;
+  cursor: pointer;
 }
 
 .sub-head-1 {
@@ -1644,6 +1829,16 @@ input[type="checkbox"] + label {
   width: 100%;
 }
 
+.question-mat-level-name {
+  font-weight: normal;
+  font-size: 0.8rem;
+  color: $white;
+  background-color: $primary-600;
+  border: 1px solid $primary-600;
+  border-radius: 1rem;
+  padding: 0.1rem 0.5rem;
+}
+
 .answer-group {
   display: flex;
   flex-wrap: nowrap;
@@ -1716,19 +1911,27 @@ tooltip.glossary-definition.tooltip-left::after {
   width: 100%;
   border-top: 1px solid $primary-550;
   padding: 10px;
-  margin-bottom: 1em;
+  /*margin-bottom: 1em;*/
 }
 
 .extras-button {
   border: 1px solid transparent;
   border-radius: 0.5em;
   background-color: transparent;
-  margin: 0 3px;
+  height: 40px;
+  width: 40px;
+  margin-right: 2px;
+  margin-bottom: 2px;
 }
 
 .extras-button.active {
   background-color: $gray-50;
   border: 1px solid $primary-450;
+}
+
+.extras-button:focus {
+  background-color: $gray-50;
+  border: 1px solid $primary-250;
 }
 
 .extras-button.empty {
@@ -1789,7 +1992,17 @@ ul.related-questions li {
 
 .domain-group-heading {
   margin-bottom: 1rem;
-  font-size: 30px;
+  font-size: 2rem;
+}
+
+.capability-group-heading {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.assessment-factor-group-heading {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 // Dashboard
@@ -2982,6 +3195,15 @@ table.td-text-left td {
   max-width: 50%;
 }
 
+//// Maturity Models ////
+
+.maturity-model-card {
+  border-radius: 0.3rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
 /////////////////// Tutorial pages ///////////////
 div.tutorial h5,
 .tutorial h6 {
@@ -2994,3 +3216,102 @@ div.tutorial h6 {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+.image-center {
+  display: flex !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.image-outline {
+  border: 1px solid #333;
+}
+
+.image-caption {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.max-1000 {
+  max-width: 1000px;
+}
+
+.max-1200 {
+  max-width: 1200px;
+}
+
+.docTitle {
+  font-size: large;
+  color: $primary-450;
+}
+
+.categTitle {
+  color: $primary-450;
+}
+
+.matbtn,
+.singletree {
+  color: $primary-450;
+}
+
+.nodesubcategory:hover {
+  background-color: $gray-150;
+}
+
+.expand-collapseBtn:hover {
+  background-color: $gray-150;
+  color: $primary-450;
+  border: 1px solid $primary-450;
+}
+
+.btn.btn-primary.expand-collapseBtn:focus {
+  background-color: $gray-150;
+  color: $primary-450;
+  border: 1px solid $primary-450;
+}
+
+.example-tree-invisible {
+  // display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+h6.dropdown-header {
+  font-size: 1rem;
+  color: $gray-250;
+}
+
+
+
+//////// CMMC
+.cmmc2-level-1 {
+  color: #fff;
+  background-color: #862180;
+}
+
+.cmmc2-level-2 {
+  color: #000;
+  background-color: #98c355;
+}
+
+.cmmc2-level-3 {
+  color: #fff;
+  background-color: #254a5e;
+}
+
+
+
+
+.div-shield {
+  pointer-events: none;
+  opacity: .5;
+}
+
+

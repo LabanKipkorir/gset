@@ -59,7 +59,7 @@
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "src/styles.css"
+              "src/sass/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -179,6 +179,7 @@
               "src/sass/styles.scss",
               "src/styles.css",
               "src/sass/cmmc-results.scss"
+              
             ],
             "assets": [
               "src/assets",
