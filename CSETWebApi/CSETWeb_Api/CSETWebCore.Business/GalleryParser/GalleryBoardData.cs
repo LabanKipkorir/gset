@@ -21,7 +21,7 @@ namespace CSETWebCore.Business.GalleryParser
         }
         public string Group_Title { get; set; }
         public List<GalleryItem> GalleryItems   { get; set; }
-        public int Group_Id { get; internal set; }
+        public int Group_Id { get; set; }
     }
 
     /// <summary>

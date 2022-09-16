@@ -24,7 +24,9 @@
       </div>
     </div>
     <div class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a" *ngIf="checkActive('newAssessment')">
-        <app-new-assessment class="new-assessment"></app-new-assessment>
+        <button (click)="changeToSearch()"> Search Style Interface</button>
+        <app-new-assessment *ngIf="!isSearch" class="new-assessment"></app-new-assessment>
+        <app-search-page *ngIf="isSearch"></app-search-page>
     </div>
     <div *ngIf="checkActive('myAssessments')">
         <app-my-assessments></app-my-assessments>

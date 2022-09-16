@@ -107,9 +107,7 @@ namespace CSETWebCore.Business.GalleryParser
                         select new {r,g,d,i};
             var rvalue= new GalleryBoardData();
              
-            //some how I did this wrong 
-            //I have not had to do this kind of indexing in a long time
-            //oh well not going to change it now
+            
             int row = -1; 
             GalleryGroup galleryGroup = null;
             foreach(var item in data)

@@ -28,9 +28,7 @@ export class ListItemsComponent implements OnInit {
         //if event.from.id and event.to.id are the same we are moving within a group
         //if event.from.id and event.to.id are different we are moving from one group to another
 
-        // console.log(event.from.id);
-        // console.log(event.to.id);        
-        console.log(event.oldIndex +":"+ event.newIndex)
+        
         let item = new MoveItem();
         item.fromId = event.from.id;
         item.toId = event.to.id;
@@ -42,7 +40,14 @@ export class ListItemsComponent implements OnInit {
       },
       onAdd: (event: any) => {
         console.log('added');         
-        console.log(event.oldIndex +":"+ event.newIndex)
+                
+        let item = new MoveItem();
+        item.fromId = event.from.id;
+        item.toId = event.to.id;
+        item.newIndex = event.newIndex;
+        item.oldIndex = event.oldIndex;
+        item.Layout_Name = "CSET";
+        this.svcGalleryEditor.updatePositionOfItem(item).subscribe();
       },
       onRemove: (event: any) => {        
         console.log('removed');                
@@ -54,11 +59,12 @@ export class ListItemsComponent implements OnInit {
   ngOnInit(): void {    
   }
   
-  open(item:any, value:string){
+  open(item:any, value:string, control: any){
     console.log(item);
     if(item.group_Id!==undefined)
       this.svcGalleryEditor.UpdateGalleryGroupName(item.group_Id, value).subscribe();
     if(item.gallery_Item_Id!==undefined)
       this.svcGalleryEditor.UpdateGalleryItem(item.gallery_Item_Id, value).subscribe();
+    alert('saved');
   }
 }

@@ -16,11 +16,13 @@ namespace CSETWebCore.Api.Controllers
         
         private readonly ITokenManager _token;        
         private CSETContext _context;
-
-        public GalleryEditorController(ITokenManager token, CSETContext context)
+        private IGalleryState _stateManager;
+            
+        public GalleryEditorController(IGalleryState parser, ITokenManager token, CSETContext context)
         {
             _token = token;
             _context = context;
+            _stateManager = parser;
         }
         [HttpPost]
         [Route("api/galleryEdit/updatePosition")]
@@ -37,8 +39,9 @@ namespace CSETWebCore.Api.Controllers
                                where r.Layout_Name == moveItem.Layout_Name
                                orderby r.Row_Index
                                select r).ToList();
+
                     _context.GALLERY_ROWS.RemoveRange(rows);
-                    //question can I violate the primary key before I save? 
+                    _context.SaveChanges();
                     //if so then remove the old one and insert it at the new position.
                     //iterate through all the items and just reassign the row_index. 
                     var itemToMove = rows[int.Parse(moveItem.oldIndex)];
@@ -55,9 +58,27 @@ namespace CSETWebCore.Api.Controllers
                     //get the group
                     var detailsList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r=> r.Column_Index).ToList();
                     var itemToMove = detailsList[int.Parse(moveItem.oldIndex)];
-                    detailsList.Remove(itemToMove);
-                    detailsList.Insert(int.Parse(moveItem.newIndex), itemToMove);
-                    RenumberGroup(detailsList);
+
+                    if (int.Parse(moveItem.newIndex) < int.Parse(moveItem.oldIndex))
+                    {
+                        //moving up the list 
+                        //remove first then insert
+                        //recalc
+                        detailsList.RemoveAt(int.Parse(moveItem.oldIndex));
+                        detailsList.Insert(int.Parse(moveItem.newIndex), itemToMove);
+                    }
+                    else if (int.Parse(moveItem.newIndex) > int.Parse(moveItem.oldIndex))
+                    {
+                        //moving down the list
+                        //insert first then move down
+                        detailsList.Insert(int.Parse(moveItem.newIndex), itemToMove);
+                        detailsList.RemoveAt(int.Parse(moveItem.oldIndex));
+                        
+                    }
+                    //else moving to the same spot do nothing
+
+                        RenumberGroup(detailsList);                   
+                    _context.SaveChanges();
                 }
                 else
                 {
@@ -67,10 +88,25 @@ namespace CSETWebCore.Api.Controllers
                     var detailsOldList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r => r.Column_Index).ToList();
                     var itemToMove = detailsOldList[int.Parse(moveItem.oldIndex)];
                     detailsOldList.Remove(itemToMove);
+                    _context.GALLERY_GROUP_DETAILS.Remove(itemToMove);
                     RenumberGroup(detailsOldList);
+                    _context.SaveChanges();
                     var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
-                    detailsNewList.Insert(int.Parse(moveItem.newIndex), itemToMove);
+
+                    var itemToMoveClone = new GALLERY_GROUP_DETAILS()
+                    {
+                        Gallery_Item_Id = itemToMove.Gallery_Item_Id,
+                        Click_Count = itemToMove.Click_Count,
+                        Column_Index = int.Parse(moveItem.newIndex),
+                        Group_Id = int.Parse(moveItem.toId)
+                    };
+
+                    
+                    detailsNewList.Insert(int.Parse(moveItem.newIndex), itemToMoveClone);
+                    
+                    _context.GALLERY_GROUP_DETAILS.Add(itemToMoveClone);
                     RenumberGroup(detailsNewList);
+                    _context.SaveChanges();
                 }
 
                 return Ok();
@@ -123,6 +159,57 @@ namespace CSETWebCore.Api.Controllers
                 }
 
                 return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/galleryEdit/getboard")]
+        public IActionResult GetBoard(string Layout_Name)
+        {
+            try
+            {
+                
+                
+                
+                var data = from r in _context.GALLERY_ROWS
+                           join g in _context.GALLERY_GROUP on r.Group_Id equals g.Group_Id
+                           join d in _context.GALLERY_GROUP_DETAILS on g.Group_Id equals d.Group_Id into dd
+                           from dl in dd.DefaultIfEmpty()
+                           where r.Layout_Name == Layout_Name && dl ==null
+                           orderby r.Row_Index
+                           select new { r, g};
+                var rvalue = new GalleryBoardData();
+
+
+                int row = -1;
+                GalleryGroup galleryGroup = null;
+                foreach (var item in data)
+                {
+                    if (row != item.r.Row_Index)
+                    {
+                        rvalue.Layout_Name = item.r.Layout_Name;
+                        galleryGroup = new GalleryGroup();
+                        galleryGroup.Group_Title = item.g.Group_Title;
+                        galleryGroup.Group_Id = item.g.Group_Id;
+                        rvalue.Rows.Add(galleryGroup);
+                        row = item.r.Row_Index;
+                    }
+                }
+
+
+                var items = _stateManager.GetGalleryBoard(Layout_Name);
+                foreach (var item in rvalue.Rows)
+                {
+                    items.Rows.Insert(0, item);
+                }
+                
+
+
+                return Ok(items);
             }
             catch (Exception e)
             {

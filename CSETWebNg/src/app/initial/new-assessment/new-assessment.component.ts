@@ -63,10 +63,12 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     }
   };
 
+  
   galleryData: any;
   rows: any;
   testRow: any;
   show:boolean = false;
+  
 
   constructor(public dialog:MatDialog, 
     public breakpointObserver: BreakpointObserver, 
@@ -79,9 +81,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       (resp: any) => {
         this.galleryData = resp;
         this.rows = this.galleryData.rows;
-        this.testRow = this.rows[1];
-        console.log(this.testRow);
-        console.log(this.rows);
+        this.testRow = this.rows[1];        
       }
     );
    
@@ -90,7 +90,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.checkNavigation();
   }
-
   checkNavigation(){
     let swiperPrev = document.getElementsByClassName('swiper-button-prev');
     let swiperNext = document.getElementsByClassName('swiper-button-next');

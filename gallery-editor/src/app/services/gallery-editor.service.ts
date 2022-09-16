@@ -53,7 +53,7 @@ export class GalleryEditorService {
    * Retrieves the list of frameworks.
    */
   getGalleryItems(layout_name: string) {
-    return  this.http.get("http://localhost:5000/api/gallery/getboard",  {
+    return  this.http.get("http://localhost:5000/api/galleryEdit/getboard",  {
       params: {
         Layout_Name: layout_name
       }

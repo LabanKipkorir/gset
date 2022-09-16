@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class LandingPageTabsComponent implements OnInit {
   
   currentTab:string;
+  isSearch: boolean= false;
   constructor() { }
 
   ngOnInit(): void {
@@ -21,5 +22,9 @@ export class LandingPageTabsComponent implements OnInit {
 
   checkActive(tab) {
     return this.currentTab === tab;
+  }
+
+  changeToSearch(){
+    this.isSearch = !this.isSearch;
   }
 }
