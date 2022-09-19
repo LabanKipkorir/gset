@@ -3653,9 +3653,9 @@ h6.dropdown-header {
   
   border-radius:5px;
   background-color: white;
-  
+  z-index:-1;
   &:hover {
-      z-index: 1000;
+      z-index: 10000;
       box-shadow: 0 0px 6px 0 rgb(0 0 0 / 20%);
       margin-top: -15px;
       transform: scale(1.1);
