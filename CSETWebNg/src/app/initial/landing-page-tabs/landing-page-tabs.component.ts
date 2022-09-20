@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-landing-page-tabs',
   templateUrl: './landing-page-tabs.component.html',
@@ -10,6 +11,7 @@ export class LandingPageTabsComponent implements OnInit {
   
   currentTab:string;
   isSearch: boolean= false;
+  searchString:string="";
   constructor() { }
 
   ngOnInit(): void {
@@ -24,7 +26,13 @@ export class LandingPageTabsComponent implements OnInit {
     return this.currentTab === tab;
   }
 
-  changeToSearch(){
-    this.isSearch = !this.isSearch;
+  changeToSearch(val){
+    this.isSearch = true;
+    this.searchString = val;
   }
+  cancelSearch(){
+    this.isSearch = false;
+    this.searchString = '';
+  }
+  
 }

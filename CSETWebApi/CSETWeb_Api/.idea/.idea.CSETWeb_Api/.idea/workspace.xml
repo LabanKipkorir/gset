@@ -16,6 +16,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/search-page/search-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/search-page/search-page.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,32 +161,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs</url>
-          <line>360</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" initialLine="360" containingFunctionPresentation="method 'GetAllModels'">
-            <startOffsets>
-              <option value="12888" />
-            </startOffsets>
-            <endOffsets>
-              <option value="12944" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs</url>
-          <line>379</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" initialLine="379" containingFunctionPresentation="method 'GetAllModels'">
-            <startOffsets>
-              <option value="13727" />
-            </startOffsets>
-            <endOffsets>
-              <option value="13743" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs</url>

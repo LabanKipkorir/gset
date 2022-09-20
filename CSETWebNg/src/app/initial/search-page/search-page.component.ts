@@ -1,5 +1,5 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { AssessmentService } from '../../services/assessment.service';
@@ -7,6 +7,8 @@ import { GalleryService } from '../../services/gallery.service';
 import FuzzySearch from 'fuzzy-search';
 import { SwiperComponent } from 'swiper/angular';
 import { SwiperOptions } from 'swiper';
+import Fuse from 'fuse.js';
+import { map } from 'lodash';
 
 @Component({
   selector: 'app-search-page',
@@ -15,9 +17,17 @@ import { SwiperOptions } from 'swiper';
 })
 export class SearchPageComponent implements OnInit, AfterViewInit  {
   @ViewChild('swiper', {static: false}) swiper?: SwiperComponent;
+
+  @Input() searchQuery:string;
   hoverIndex = -1;  
-  searchQuery: string ='';  
+  
   show:boolean = false;
+  fuse: any;
+  fuseResults: any[];
+  options = {
+    includeScore: true,
+    keys:["title", "descriptions"]
+  };
   
   saveOldgalleryData: any[];
   //TODO: need to set the galleryItems from the query filter
@@ -52,7 +62,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit  {
     }, 
     on: {
       resize: ()=>{
-        console.log(this.config.slidesPerView);
+        
       }
     }
   };
@@ -68,8 +78,14 @@ export class SearchPageComponent implements OnInit, AfterViewInit  {
    
   }
 
-  ngOnInit(): void {
+  ngOnChanges(){
+    if(this.searchQuery && this.fuse){
+      this.sort();
+    }
+  }
 
+  ngOnInit(): void {
+    
     this.breakpointObserver.observe(['(min-width:200px)', '(min-width:620px)','(min-width:800px)', '(min-width:1220px)', '(min-width:1460px)']).subscribe((state:BreakpointState)=>{
       if(state.breakpoints['(min-width:200px)']){
         this.cardsPerView=1;
@@ -94,35 +110,40 @@ export class SearchPageComponent implements OnInit, AfterViewInit  {
         resp.rows.forEach(element => {
            element.galleryItems.forEach( item => {
             this.galleryItems.push(item);
-            this.galleryItemsTmp.push(item);
+            this.galleryItemsTmp.push(item);            
            })           
           }
-        );        
-        this.searcher = new FuzzySearch(this.galleryItems, ['title', 'description'], {
-          caseSensitive: false,
-          sort: false
-        });
+        );   
+        this.fuse = new Fuse(this.galleryItemsTmp, this.options)
+        this.galleryItemsTmp = map(this.galleryItemsTmp, (item, index)=>({
+            item,
+            refIndex: index,
+            matches: [],
+            score: 1,
+          })    
+        );
         this.shuffelCards(this.cardsPerView);
+        this.sort();
       }
     );
     
     this.checkNavigation();
   }
+
   ngAfterViewInit(): void {
     this.checkNavigation();
   }
 
   shuffelCards(i:number){
-    console.log(i);
+    
     this.rows = [];
-    //console.log(this.galleryItemsTmp);
     var count=this.cardsPerView;
     var row = [];
-    for(var x = 0; x < this.galleryItemsTmp.length - 1; x++ ){
-      if(count >= 0){
+    for(var x = 0; x < this.galleryItemsTmp.length; x++ ){
+      if(count > 0){
         row.push(this.galleryItemsTmp[x])
         count--;
-        if(count == 0)
+        if(count == 0 || x == this.galleryItemsTmp.length-1)
         {
           this.rows.push(row);
           count=this.cardsPerView;
@@ -130,7 +151,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit  {
         }
       }
     }
-    console.log(this.rows);
   }
 
   checkNavigation(){
@@ -162,9 +182,23 @@ export class SearchPageComponent implements OnInit, AfterViewInit  {
 
   onSlideChange(){}
 
-  sort(searchQuery:string){        
-    //this.galleryItemsTmp  = this.galleryItems.filter(x=> x.title.includes(searchQuery));    
-    this.galleryItemsTmp = this.searcher.search(searchQuery);
+  sort(){        
+    console.log(this.searchQuery);
+    if(!this.fuse){
+      this.fuse = new Fuse(this.galleryItemsTmp, this.options);
+    }
+    if(this.searchQuery){
+      this.galleryItemsTmp = this.fuse.search(this.searchQuery);
+    } else {
+      this.galleryItemsTmp = map(this.galleryItemsTmp, (item, index)=>({
+          item,
+          refIndex: index,
+          matches: [],
+          score: 1,
+        })    
+      );
+    }
+    
     this.shuffelCards(this.cardsPerView);
   }
 
