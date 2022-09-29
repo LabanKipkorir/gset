@@ -1,6 +1,7 @@
-const { app, BrowserWindow, Menu, MenuItem, shell } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, shell, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
 const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
@@ -50,13 +51,22 @@ function createWindow() {
     if (x.role === 'filemenu') {
       let newSubmenu = new Menu();
 
-      // Add print option (we only want to print the focused window)
+      // Add save as pdf option (we only want to save the focused window)
       newSubmenu.append(
         new MenuItem({
           type: 'normal',
-          label: 'Print',
+          label: 'Save as PDF',
           click: () => {
-            BrowserWindow.getFocusedWindow().webContents.print();
+              const pdfPath = dialog.showSaveDialog(null);
+              BrowserWindow.getFocusedWindow().webContents.printToPDF({ preferCSSPageSize: true }).then(data => {
+
+              fs.writeFile(pdfPath, data, (error) => {
+                if (error) log.error(`Error saving PDF to ${pdfPath}`);
+                log.info(`Wrote PDF successfully to ${pdfPath}`);
+              })
+            }).catch(error => {
+              log.error(`Failed to write PDF to ${pdfPath}: `, error);
+            });
           }
         })
       );
