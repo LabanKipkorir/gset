@@ -32,7 +32,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.setTab('myAssessments');
 
-    this.checkPasswordReset();
+
 
     // setting the tab when we get a query parameter.
     this.route.queryParamMap.pipe(filter(params => params.has('tab'))).subscribe(params => {
@@ -76,43 +76,4 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   *
-   */
-   checkPasswordReset() {
-    if (this.authSvc.isLocal) {
-      this.continueStandAlone();
-      return;
-    }
-
-    this.authSvc.passwordStatus()
-      .subscribe((result: PasswordStatusResponse) => {
-        if (result) {
-          if (!result.resetRequired) {
-            this.openPasswordDialog(true);
-          }
-        }
-      });
-  }
-
-  openPasswordDialog(showWarning: boolean) {
-    if (localStorage.getItem("returnPath")) {
-      if (!Number(localStorage.getItem("redirectid"))) {
-        this.hasPath(localStorage.getItem("returnPath"));
-      }
-    }
-    this.dialog
-      .open(ChangePasswordComponent, {
-        width: "300px",
-        data: { primaryEmail: this.authSvc.email(), warning: showWarning }
-      })
-      .afterClosed()
-      .subscribe(() => {
-        this.checkPasswordReset();
-      });
-  }
-
-  continueStandAlone() {
-    this.router.navigate(['/home']);
-  }
 }

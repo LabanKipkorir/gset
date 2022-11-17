@@ -21,12 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { PasswordStatusResponse } from '../../models/reset-pass.model';
+import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
+import { AuthenticationService } from '../../services/authentication.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -35,15 +40,23 @@ import { filter } from 'rxjs/operators';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class LoginComponent implements OnInit {
-
-  constructor(
+    constructor(
     public configSvc: ConfigService,
-    private titleSvc: Title
+    private titleSvc: Title,        
+    private authSvc: AuthenticationService,        
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private loginSvc: LoginService
   ) { 
   }
 
   ngOnInit() {
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);    
+  }
+
+  preLoginCheck(){
+    this.checkPasswordReset();
   }
 
   /**
@@ -60,6 +73,46 @@ export class LoginComponent implements OnInit {
       && (this.configSvc.installationMode ?? 'CSET') === skin;
   }
 
+  
+  /*** this is a copy from the real components
+   * please get rid of this. 
+  */
+   hasPath(rpath: string) {
+    if (rpath != null) {
+      localStorage.removeItem("returnPath");
+      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
+    }
+  }
+   /**
+   *
+   */
+    checkPasswordReset() {
+      this.authSvc.passwordStatus()
+        .subscribe((result: PasswordStatusResponse) => {
+          if (result) {
+            if (!result.resetRequired) {
+              this.openPasswordDialog(true);
+            }
+          }
+        });
+    }
+  
+    openPasswordDialog(showWarning: boolean) {
+      if (localStorage.getItem("returnPath")) {
+        if (!Number(localStorage.getItem("redirectid"))) {
+          this.hasPath(localStorage.getItem("returnPath"));
+        }
+      }
+      this.dialog.open(ChangePasswordComponent, {
+          width: "300px",
+          data: { primaryEmail: this.authSvc.email(), warning: showWarning }
+        })
+        .afterClosed()
+        .subscribe(() => {
+          this.checkPasswordReset();
+        });
+    }
+    
   continueStandAlone() {
     // this.router.navigate(['/home']);
   }

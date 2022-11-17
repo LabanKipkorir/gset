@@ -12,6 +12,8 @@ import { AssessmentService } from '../../services/assessment.service';
 import { EmailService } from '../../services/email.service';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
+import { PasswordStatusResponse } from '../../models/reset-pass.model';
 
 @Component({
   selector: 'app-login-access-key',
@@ -220,4 +222,5 @@ export class LoginAccessKeyComponent implements OnInit {
     });
   }
 
+    
 }

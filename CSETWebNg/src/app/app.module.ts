@@ -518,6 +518,8 @@ import { CpgPracticeTableComponent } from './assessment/results/cpg/cpg-practice
 import { LogoutComponent } from './initial/logout/logout.component';
 import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-summary/cpg-domain-summary.component';
 import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
+import { LoginService } from './services/login.service';
+
 
 
 
@@ -1054,7 +1056,8 @@ import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-c
         CrrService,
         Utilities,
         NCUAService,
-        GalleryService
+        GalleryService, 
+        LoginService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
