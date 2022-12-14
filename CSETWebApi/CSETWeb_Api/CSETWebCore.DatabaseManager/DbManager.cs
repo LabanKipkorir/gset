@@ -239,7 +239,7 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         /// <param name="destDBFile">The new location to copy the mdf file to</param>
         /// <param name="destLogFile">The new location to copy the ldf file to</param>
-        private void CopyDBFromInstallationSource(string destDBFile, string destLogFile)
+        public void CopyDBFromInstallationSource(string destDBFile, string destLogFile)
         {
             string websitedataDir = "Data";
             string sourceDirPath = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName);
@@ -249,6 +249,8 @@ namespace CSETWebCore.DatabaseManager
             log.Info("Copying clean database file from " + sourcePath + " to " + destDBFile);
             try
             {
+                //if the file already exits 
+
                 File.Copy(sourcePath, destDBFile, true);
                 File.Copy(sourceLogPath, destLogFile, true);
             }
