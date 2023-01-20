@@ -60,7 +60,6 @@ export class DiagramVulnerabilitiesDialogComponent implements OnInit {
       return;
     }
 
-    //TODO: Implement column sorting for commented out columns
     this.product.vulnerabilities.sort((a: Vulnerability, b: Vulnerability) => {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {

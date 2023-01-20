@@ -29,6 +29,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.model';
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
+import { DiagramSoftwareDialogComponent } from './diagram-software-dialog/diagram-software-dialog.component';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -132,6 +133,12 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     });
   }
 
+  showSoftware(component) {
+    this.dialog.open(DiagramSoftwareDialogComponent, {
+      data: { product: component.product, vendor: component.vendor }
+    });
+  }
+
   sortData(sort: Sort) {
 
     if (!sort.active || sort.direction === "") {
@@ -149,8 +156,6 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
           return this.comparer.compare(a.vendorName, b.vendorName, isAsc);
         case "productName":
           return this.comparer.compare(a.productName, b.productName, isAsc);
-        case "version":
-          return this.comparer.compare(a.versionName, b.versionName, isAsc);
         case "serialNumber":
           return this.comparer.compare(a.serialNumber, b.serialNumber, isAsc);
         case "physicalLocation":

@@ -523,6 +523,7 @@ import { ReferencesTableComponent } from './assessment/questions/references-tabl
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
 import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities.component';
+import { DiagramSoftwareDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-software-dialog/diagram-software-dialog.component';
 
 
 
@@ -1004,7 +1005,8 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         ReferencesTableComponent,
         ReferencesDisplayComponent,
         DiagramVulnerabilitiesDialogComponent,
-        DiagramVulnerabilitiesComponent
+        DiagramVulnerabilitiesComponent,
+        DiagramSoftwareDialogComponent
     ],
     providers: [
         ConfigService,

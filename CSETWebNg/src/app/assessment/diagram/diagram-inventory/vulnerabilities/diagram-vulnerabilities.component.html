@@ -29,9 +29,9 @@
     <th mat-sort-header="assetType">Asset Type</th>
     <th mat-sort-header="vendorName">Vendor Name</th>
     <th mat-sort-header="productName">Product Name</th>
-    <th mat-sort-header="version" style="width: 10%">Version Name</th>
     <th mat-sort-header="serialNumber" style="width: 10%">Serial Number</th>
     <th mat-sort-header="physicalLocation" style="width: 10%">Physical Location</th>
+    <th mat-sort-header="software" style="width: 10%">Software</th>
     <th mat-sort-header="vulnerabilities">Vulnerabilities</th>
 
     <tr *ngFor="let component of diagramComponentList;">
@@ -72,9 +72,16 @@
           </mat-option>
         </mat-autocomplete>
       </td>
-      <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)" /></td>
       <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent(component)" /></td>
       <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)" /></td>
+      <td>
+        <div>
+          <button class="btn" (click)="showSoftware(component)"
+          matTooltip="View / edit the software associated with this network component">
+            <span class="icon-link-button-text-dark" style="color: #1a53ff">Software</span>
+          </button>
+        </div>
+      </td>
       <td>
         <div
           matTooltip="There are no vulnerabilities identified with this vendor and product in the current local database"
