@@ -41,13 +41,19 @@ export class DiagramVulnerabilitiesDialogComponent implements OnInit {
 
   product: Product;
   vendor: Vendor;
+  componentLabel: string;
+  assetType: string;
 
   comparer: Comparer = new Comparer();
 
   constructor(
     private dialog: MatDialogRef<DiagramVulnerabilitiesDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) { this.product = data.product; this.vendor = data.vendor;  }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.product = data.product;
+      this.vendor = data.vendor;
+      this.componentLabel = data.componentLabel;
+      this.assetType = data.assetType;
+    }
 
   ngOnInit(): void { }
 

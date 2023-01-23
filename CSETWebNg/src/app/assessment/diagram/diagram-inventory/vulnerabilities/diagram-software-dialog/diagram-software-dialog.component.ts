@@ -13,6 +13,8 @@ export class DiagramSoftwareDialogComponent implements OnInit {
 
   product: Product;
   vendor: Vendor;
+  componentLabel: string;
+  assetType: string;
 
   comparer: Comparer = new Comparer();
 
@@ -20,10 +22,11 @@ export class DiagramSoftwareDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.product = data.product;
     this.vendor = data.vendor;
+    this.componentLabel = data.componentLabel;
+    this.assetType = data.assetType;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   close() {
     this.dialog.close();

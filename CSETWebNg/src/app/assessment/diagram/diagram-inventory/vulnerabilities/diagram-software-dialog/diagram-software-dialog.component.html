@@ -28,12 +28,14 @@
 
   <mat-dialog-content class="p-3 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
 
-    <p><span class="font-weight-bold">Vendor:</span> {{ vendor.name }}</p>
-    <p><span class="font-weight-bold">Product:</span> {{ product.name }}</p>
+    <h3>{{ componentLabel }}</h3>
+    <p><span class="font-weight-bold">Asset Type:</span> {{ assetType }}</p>
+    <p *ngIf="vendor"><span class="font-weight-bold">Vendor:</span> {{ vendor.name }}</p>
+    <p *ngIf="product"><span class="font-weight-bold">Product:</span> {{ product.name }}</p>
 
     <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
-      <th mat-sort-header="">Software Vendor</th>
-      <th mat-sort-header="score" style="width: 15%">Name</th>
+      <th mat-sort-header="vendor">Software Vendor</th>
+      <th mat-sort-header="score">Name</th>
       <th mat-sort-header="version">Version</th>
     </table>
   </mat-dialog-content>
