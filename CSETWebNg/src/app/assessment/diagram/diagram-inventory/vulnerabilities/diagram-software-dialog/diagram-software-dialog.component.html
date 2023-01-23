@@ -37,6 +37,11 @@
       <th mat-sort-header="vendor">Software Vendor</th>
       <th mat-sort-header="score">Name</th>
       <th mat-sort-header="version">Version</th>
+      <tr *ngFor="let softwareItem of component.softwareItems">
+        <td><input class="form-control" [(ngModel)]="softwareItem.vendorName"></td>
+        <td><input class="form-control" [(ngModel)]="softwareItem.name"></td>
+        <td><input class="form-control" [(ngModel)]="softwareItem.version"></td>
+      </tr>
     </table>
     <button class="btn btn-group d-flex align-items-center flex-00a mt-2" (click)="addNewSoftwareItem()">
       <span class="cset-icons-plus fs-base mr-2"></span>

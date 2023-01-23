@@ -1,3 +1,4 @@
+import { ComponentSoftwareItem } from './../../../../../models/diagram-vulnerabilities.model';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
@@ -26,7 +27,11 @@ export class DiagramSoftwareDialogComponent implements OnInit {
   }
 
   addNewSoftwareItem() {
-
+    if (!this.component.softwareItems) {
+      this.component.softwareItems = [new ComponentSoftwareItem()];
+    } else {
+      this.component.softwareItems.push(new ComponentSoftwareItem());
+    }
   }
 
   sortData(sort: Sort) {
