@@ -11,25 +11,22 @@ import { Product, Vendor } from '../../../../../models/diagram-vulnerabilities.m
 })
 export class DiagramSoftwareDialogComponent implements OnInit {
 
-  product: Product;
-  vendor: Vendor;
-  componentLabel: string;
-  assetType: string;
-
+  component: any;
   comparer: Comparer = new Comparer();
 
   constructor(private dialog: MatDialogRef<DiagramSoftwareDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.product = data.product;
-    this.vendor = data.vendor;
-    this.componentLabel = data.componentLabel;
-    this.assetType = data.assetType;
+    this.component = data.component
   }
 
   ngOnInit(): void {}
 
   close() {
     this.dialog.close();
+  }
+
+  addNewSoftwareItem() {
+
   }
 
   sortData(sort: Sort) {

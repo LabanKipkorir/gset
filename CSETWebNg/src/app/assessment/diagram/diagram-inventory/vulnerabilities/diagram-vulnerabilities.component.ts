@@ -129,23 +129,13 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
 
   showVulnerabilities(component) {
     this.dialog.open(DiagramVulnerabilitiesDialogComponent, {
-      data: {
-        componentLabel: component.label,
-        assetType: component.assetType,
-        product: component.product,
-        vendor: component.vendor
-      }
+      data: { component: component }
     });
   }
 
   showSoftware(component) {
     this.dialog.open(DiagramSoftwareDialogComponent, {
-      data: {
-        componentLabel: component.label,
-        assetType: component.assetType,
-        product: component.product,
-        vendor: component.vendor
-      }
+      data: { component: component }
     });
   }
 

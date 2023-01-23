@@ -24,7 +24,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { Product, Vendor, Vulnerability } from '../../../../../models/diagram-vulnerabilities.model';
+import { Vulnerability } from '../../../../../models/diagram-vulnerabilities.model';
 import { Comparer } from '../../../../../helpers/comparer';
 
 interface cveWarning {
@@ -39,20 +39,13 @@ interface cveWarning {
 })
 export class DiagramVulnerabilitiesDialogComponent implements OnInit {
 
-  product: Product;
-  vendor: Vendor;
-  componentLabel: string;
-  assetType: string;
-
+  component: any;
   comparer: Comparer = new Comparer();
 
   constructor(
     private dialog: MatDialogRef<DiagramVulnerabilitiesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.product = data.product;
-      this.vendor = data.vendor;
-      this.componentLabel = data.componentLabel;
-      this.assetType = data.assetType;
+      this.component = data.component;
     }
 
   ngOnInit(): void { }
@@ -66,7 +59,7 @@ export class DiagramVulnerabilitiesDialogComponent implements OnInit {
       return;
     }
 
-    this.product.vulnerabilities.sort((a: Vulnerability, b: Vulnerability) => {
+    this.component.product.vulnerabilities.sort((a: Vulnerability, b: Vulnerability) => {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "cve":
@@ -74,7 +67,7 @@ export class DiagramVulnerabilitiesDialogComponent implements OnInit {
         case "score":
           return this.comparer.compare(a.scores[0].cvss_V3.baseScore, b.scores[0].cvss_V3.baseScore, isAsc);
         case "version":
-          return this.comparer.compare(this.product.affectedVersions, this.product.affectedVersions, isAsc);
+          return this.comparer.compare(this.component.product.affectedVersions, this.component.product.affectedVersions, isAsc);
         case "linkDetails":
           return this.comparer.compare(this.getCveUrl(a.cve), this.getCveUrl(b.cve), isAsc);
         case "linkWebsite":

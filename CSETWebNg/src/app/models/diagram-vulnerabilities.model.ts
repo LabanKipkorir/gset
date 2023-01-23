@@ -56,3 +56,9 @@ export class Vulnerability {
   scores: any[];
   title: string;
 }
+
+export class ComponentSoftwareItem {
+  vendorName: string;
+  name: string;
+  version: string;
+}

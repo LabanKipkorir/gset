@@ -28,16 +28,20 @@
 
   <mat-dialog-content class="p-3 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
 
-    <h3>{{ componentLabel }}</h3>
-    <p><span class="font-weight-bold">Asset Type:</span> {{ assetType }}</p>
-    <p *ngIf="vendor"><span class="font-weight-bold">Vendor:</span> {{ vendor.name }}</p>
-    <p *ngIf="product"><span class="font-weight-bold">Product:</span> {{ product.name }}</p>
+    <h3>{{ component.label }}</h3>
+    <p><span class="font-weight-bold">Asset Type:</span> {{ component.assetType }}</p>
+    <p *ngIf="component.vendor"><span class="font-weight-bold">Vendor:</span> {{ component.vendor.name }}</p>
+    <p *ngIf="component.product"><span class="font-weight-bold">Product:</span> {{ component.product.name }}</p>
 
     <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
       <th mat-sort-header="vendor">Software Vendor</th>
       <th mat-sort-header="score">Name</th>
       <th mat-sort-header="version">Version</th>
     </table>
+    <button class="btn btn-group d-flex align-items-center flex-00a mt-2" (click)="addNewSoftwareItem()">
+      <span class="cset-icons-plus fs-base mr-2"></span>
+      <span>Add New Software Item</span>
+  </button>
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-end flex-00a">

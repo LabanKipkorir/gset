@@ -31,10 +31,10 @@
       Disclaimer: The following affects this Vendor and Product, but might not affect your exact device based on Version or Serial Number.
     </div>
 
-    <h3>{{ componentLabel }}</h3>
-    <p><span class="font-weight-bold">Asset Type:</span> {{ assetType }}</p>
-    <p *ngIf="vendor"><span class="font-weight-bold">Vendor:</span> {{ vendor.name }}</p>
-    <p *ngIf="product"><span class="font-weight-bold">Product:</span> {{ product.name }}</p>
+    <h3>{{ component.label }}</h3>
+    <p><span class="font-weight-bold">Asset Type:</span> {{ component.assetType }}</p>
+    <p *ngIf="component.vendor"><span class="font-weight-bold">Vendor:</span> {{ component.vendor.name }}</p>
+    <p *ngIf="component.product"><span class="font-weight-bold">Product:</span> {{ component.product.name }}</p>
 
     <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
       <th mat-sort-header="cve">CVE #</th>
@@ -43,7 +43,7 @@
       <th mat-sort-header="linkDetails">CISA Advisory Link</th>
       <th mat-sort-header="linkWebsite">Vendor Link</th>
 
-      <tr *ngFor="let vulnerability of product.vulnerabilities">
+      <tr *ngFor="let vulnerability of component.product.vulnerabilities">
         <td><a [href]="getCveUrl(vulnerability.cve)" target="_blank">{{ vulnerability.cve }}</a></td>
         <td>
           <a [href]="getFirstOrgUrl(vulnerability)" class="cve-score" target="_blank"
@@ -55,9 +55,9 @@
           </a>
         </td>
         <td>
-          {{ product.affectedVersions }}
+          {{ component.product.affectedVersions }}
         </td>
-        <td><a [href]="product.advisoryUrl" target="_blank">{{ product.advisoryUrl }}</a></td>
+        <td><a [href]="component.product.advisoryUrl" target="_blank">{{ component.product.advisoryUrl }}</a></td>
         <td><a [href]="getVendorUrl(vulnerability.remediations)" target="_blank">{{ getVendorUrl(vulnerability.remediations) }}</a></td>
       </tr>
     </table>
