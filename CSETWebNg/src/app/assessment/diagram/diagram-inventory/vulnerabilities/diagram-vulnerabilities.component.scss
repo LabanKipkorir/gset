@@ -45,3 +45,11 @@ mat-option:hover mat-icon.delete-button {
 .vulnerabilities-button:disabled span {
   color: blue;
 }
+
+.grow {
+  transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+  transform: scale(1.3);
+}

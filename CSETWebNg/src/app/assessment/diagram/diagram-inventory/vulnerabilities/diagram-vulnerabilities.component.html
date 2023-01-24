@@ -76,7 +76,7 @@
       <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)" /></td>
       <td>
         <div style="text-align: center;">
-          <button class="btn" (click)="showSoftware(component)"
+          <button class="btn grow" (click)="showSoftware(component)"
             matTooltip="View / edit the software associated with this network component">
             <span class="cset-icons-module fs-base-6"></span>
           </button>
@@ -86,7 +86,7 @@
         <div style="text-align: center;"
           matTooltip="There are no known vulnerabilities identified with this vendor and product in the current local database"
           [matTooltipDisabled]="!isShowVulnerabilitiesButtonDisabled(component)">
-          <button class="btn vulnerabilities-button" (click)="showVulnerabilities(component)" [disabled]="isShowVulnerabilitiesButtonDisabled(component)"
+          <button [class.grow]="!isShowVulnerabilitiesButtonDisabled(component)" class="btn vulnerabilities-button" (click)="showVulnerabilities(component)" [disabled]="isShowVulnerabilitiesButtonDisabled(component)"
             matTooltip="View the vulnerabilities associated with this network component">
             <span [ngClass]="isShowVulnerabilitiesButtonDisabled(component) ? 'cset-icons-check-circle' : 'cset-icons-exclamation-triangle'" class="fs-base-6"></span>
           </button>
