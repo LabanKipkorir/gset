@@ -4,6 +4,9 @@
 // 
 // 
 //////////////////////////////// 
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
 namespace CSETWebCore.Model.Diagram
 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
@@ -79,6 +82,21 @@ namespace CSETWebCore.Model.Diagram
 
 
         private string physicalLocationField { get; set; }
+
+        private List<ComponentSoftwareItem> softwareItemsField { get; set; }
+
+        [XmlElement("SoftwareItem")]
+        public List<ComponentSoftwareItem> SoftwareItems 
+        {
+            get
+            {
+                return this.softwareItemsField;
+            }
+            set
+            {
+                this.softwareItemsField = value;
+            }
+        }
 
         /// <remarks/>
         public mxGraphModelRootObjectMxCell mxCell

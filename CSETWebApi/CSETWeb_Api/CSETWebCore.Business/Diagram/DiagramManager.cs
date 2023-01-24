@@ -647,6 +647,7 @@ namespace CSETWebCore.Business.Diagram
                         item.ProductName = vertice.ProductName;
                         item.VersionName = vertice.VersionName;
                         item.SerialNumber = vertice.SerialNumber;
+                        item.SoftwareItems = vertice.SoftwareItems;
                         diagramXml.root.Items[i] = (object)item;
                     }
                 }

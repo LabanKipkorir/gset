@@ -6,11 +6,13 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.IO;
 using System.Text;
 using CSETWebCore.Business.Diagram;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Http;
 
 namespace CSETWebCore.ExportCSV
@@ -82,9 +84,9 @@ namespace CSETWebCore.ExportCSV
             datatable.Columns.Add("Visible", typeof(System.String));
             datatable.Columns.Add("Vendor Name", typeof(System.String));
             datatable.Columns.Add("Product Name", typeof(System.String));
-            datatable.Columns.Add("Version Name", typeof(System.String));
             datatable.Columns.Add("Serial Number", typeof(System.String));
             datatable.Columns.Add("Physical Location", typeof(System.String));
+            datatable.Columns.Add("Software Items", typeof(System.String));
 
 
             foreach (var c in components)
@@ -105,9 +107,19 @@ namespace CSETWebCore.ExportCSV
                 row["Visible"] = c.visible;
                 row["Vendor Name"] = c.VendorName;
                 row["Product Name"] = c.ProductName;
-                row["Version Name"] = c.VersionName;
                 row["Serial Number"] = c.SerialNumber;
                 row["Physical Location"] = c.PhysicalLocation;
+                for (int i = 0; i < c.SoftwareItems.Count; i++) 
+                {
+                    if (i == c.SoftwareItems.Count - 1)
+                    {
+                        row["Software Items"] += string.Format("{0} ({1})", c.SoftwareItems[i].Name, c.SoftwareItems[i].Version);
+                    }
+                    else
+                    {
+                        row["Software Items"] += string.Format("{0} ({1}), ", c.SoftwareItems[i].Name, c.SoftwareItems[i].Version);
+                    }
+                }
 
                 datatable.Rows.Add(row);
             }

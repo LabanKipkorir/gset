@@ -23,7 +23,7 @@
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-module fs-base-6 mr-3"></span>
-    <span>Network Component Software</span>
+    <span>Network Component Installed Software</span>
   </div>
 
   <mat-dialog-content class="p-3 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
@@ -35,12 +35,12 @@
 
     <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
       <th mat-sort-header="vendor">Software Vendor</th>
-      <th mat-sort-header="score">Name</th>
+      <th mat-sort-header="name">Name</th>
       <th mat-sort-header="version">Version</th>
       <tr *ngFor="let softwareItem of component.softwareItems">
-        <td><input class="form-control" [(ngModel)]="softwareItem.vendorName"></td>
-        <td><input class="form-control" [(ngModel)]="softwareItem.name"></td>
-        <td><input class="form-control" [(ngModel)]="softwareItem.version"></td>
+        <td><input class="form-control" [(ngModel)]="softwareItem.vendorName" (blur)="saveComponent(component)"></td>
+        <td><input class="form-control" [(ngModel)]="softwareItem.name" (blur)="saveComponent(component)"></td>
+        <td><input class="form-control" [(ngModel)]="softwareItem.version" (blur)="saveComponent(component)"></td>
       </tr>
     </table>
     <button class="btn btn-group d-flex align-items-center flex-00a mt-2" (click)="addNewSoftwareItem()">
