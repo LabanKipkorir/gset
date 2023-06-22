@@ -94,13 +94,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 
-import {AutosizeModule} from 'ngx-autosize';
-
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
-import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -249,6 +246,7 @@ import { CompareBestworstComponent } from './aggregation/compare-analytics/compa
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
+import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
@@ -636,7 +634,6 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         OverlayModule,
         PortalModule,
         ScrollingModule,
-        AutosizeModule,
         // NgChartsModule,
         // MatButtonModule,
         // MatToolbarModule,
@@ -666,7 +663,6 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         FlexLayoutModule,
         ReactiveFormsModule,
         NgxSliderModule,
-        TextareaAutosizeModule,
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
@@ -785,7 +781,6 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         ShapesComponent,
         TextComponent,
         ZonesComponent,
-        ComponentOverrideComponent,
         ExcelExportComponent,
         MergeComponent,
         MergeQuestionDetailComponent,
@@ -802,6 +797,7 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         ComponentOverrideComponent,
         ExcelExportComponent,
         LayoutBlankComponent,
+        LayoutSwitcherComponent,
         LayoutMainComponent,
         AcetLayoutMainComponent,
         ReportTestComponent,
