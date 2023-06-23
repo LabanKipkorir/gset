@@ -4027,6 +4027,7 @@ App.prototype.getPeerForMode = function (mode) {
  * @param {number} dy Y-coordinate of the translation.
  */
 App.prototype.createFile = function (title, data, libs, mode, done, replace, folderId, tempFile, clibs, success) {
+    console.log("is this where i'm att");
     if (mode !== App.MODE_CSET) {
         mode = (tempFile) ? null : ((mode != null) ? mode : this.mode);
     }

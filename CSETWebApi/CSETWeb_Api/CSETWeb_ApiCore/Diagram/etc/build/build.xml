@@ -16,7 +16,7 @@
       <arg value="../../src/main/webapp/js/stencils.min.js"/>
     </java>
 
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${war.dir}/js/shapes-14-6-5.min.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${war.dir}/js/shapes-14-6-5.min.js">
       <sources dir="${basedir}/../../build">
         <file name="shapes.js" />
       </sources>
@@ -68,7 +68,7 @@
     </concat>
     <echo file="${basedir}/Graph-Resources.js" append="true">`);</echo>
 
-    <jscomp compilationLevel="simple" forceRecompile="true" debug="false" output="${basedir}/grapheditor.min.js">
+    <jscomp compilationLevel="simple" forceRecompile="true" debug="true" output="${basedir}/grapheditor.min.js">
       <sources dir="${grapheditor.dir}">
         <file name="Editor.js" />
         <file name="EditorUi.js" />
@@ -83,7 +83,7 @@
       </sources>
     </jscomp>
 
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/sidebar.min.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/sidebar.min.js">
       <sources dir="${war.dir}/js/diagramly/sidebar">
         <file name="Sidebar.js" />
         <file name="Sidebar-ActiveDirectory.js" />
@@ -147,7 +147,7 @@
       </sources>
     </jscomp>
 
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/client.min.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/client.min.js">
       <sources dir="${war.dir}/js/deflate">
         <file name="base64.js" />
       </sources>
@@ -169,13 +169,13 @@
       </sources>
     </jscomp>
 
-    <jscomp compilationLevel="simple" forceRecompile="true" debug="false" output="${basedir}/.tmp0.min.js">
+    <jscomp compilationLevel="simple" forceRecompile="true" debug="true" output="${basedir}/.tmp0.min.js">
       <sources dir="${basedir}">
         <file name=".tmp0.js"/>
       </sources>
     </jscomp>
 
-    <jscomp compilationLevel="simple" forceRecompile="true" debug="false" output="${basedir}/.tmp1.js">
+    <jscomp compilationLevel="simple" forceRecompile="true" debug="true" output="${basedir}/.tmp1.js">
       <sources dir="${grapheditor.dir}">
         <file name="Editor.js" />
         <file name="EditorUi.js" />
@@ -236,7 +236,7 @@
       })();
     </echo>
 
-    <jscomp compilationLevel="simple" forceRecompile="true" debug="false" output="${basedir}/.tmp2.min.js">
+    <jscomp compilationLevel="simple" forceRecompile="true" debug="true" output="${basedir}/.tmp2.min.js">
       <sources dir="${basedir}">
         <file name=".tmp2.js"/>
       </sources>
@@ -285,7 +285,7 @@
     <delete file="${basedir}/.tmp1.xml"/>
     <delete file="${basedir}/.tmp2.xml"/>
 
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp1.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp1.js">
       <sources dir="${war.dir}/js/diagramly">
         <file name="DrawioFile.js" />
         <file name="CsetFile.js" />
@@ -333,7 +333,7 @@
 
     <replace file="${basedir}/base.min.js" token="@DRAWIO-VERSION@" value="${version}"/>
 
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${war.dir}/js/extensions.min.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${war.dir}/js/extensions.min.js">
       <sources dir="${war.dir}/js/diagramly">
         <file name="Extensions.js" />
       </sources>
@@ -352,7 +352,7 @@
     <concat destfile="${war.dir}/js/orgchart.min.js" fixlastline="yes" append="no">
       <filelist dir="${war.dir}/js/orgchart" files="bridge.min.js,bridge.collections.min.js,OrgChart.Layout.min.js"/>
     </concat>
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp3.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp3.js">
       <sources dir="${war.dir}/js/orgchart">
         <file name="mxOrgChartLayout.js" />
       </sources>
@@ -370,7 +370,7 @@
 
     <delete file="${basedir}/.tmp1.js"/>
 
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp1.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp1.js">
       <sources dir="${war.dir}/js/diagramly">
         <file name="DrawioFile.js" />
         <file name="CsetFile.js" />
@@ -469,7 +469,7 @@
       <file name="${war.dir}/js/orgchart.min.js" />
     </concat>
 
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp0.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp0.js">
       <sources dir="${war.dir}/connect/common/js">
         <file name="mxReader.js" />
       </sources>
@@ -487,7 +487,7 @@
   <target name="integrate" depends="atlas">
     <copy file="${war.dir}/js/atlas.min.js" tofile="${war.dir}/js/integrate.min.js" overwrite="true"/>
 
-    <jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp0.js">
+    <jscomp compilationLevel="simple" debug="true" forceRecompile="true" output="${basedir}/.tmp0.js">
       <sources dir="${basedir}/../integrate">
         <file name="Integrate.js" />
       </sources>

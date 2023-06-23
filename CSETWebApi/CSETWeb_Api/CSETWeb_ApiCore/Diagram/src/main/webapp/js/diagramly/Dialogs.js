@@ -3413,6 +3413,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	{
 		if (templateExtUrl && openExtDocCallback != null)
 		{
+			console.log("I'm in block 1");
 			if (!showName)
 			{
 				editorUi.hideDialog();
@@ -3422,6 +3423,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		}
 		else if (callback)
 		{
+			console.log("I'm in block 2");
 			if (!showName)
 			{
 				editorUi.hideDialog();
@@ -3431,12 +3433,14 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		}
 		else
 		{
+			console.log("I'm in block 3");
 			var title = nameInput.value;
 				
 			if (title != null && title.length > 0)
 			{
 				editorUi.pickFolder(editorUi.mode, function(folderId)
 				{
+					console.log(templateXml);
 					editorUi.createFile(title, templateXml, (templateLibs != null &&
 						templateLibs.length > 0) ? templateLibs : null, null, function()
 					{
@@ -3565,6 +3569,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	
 	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg, clibs)
 	{
+		console.log("here it is in the add button");
 		var xmlStuff = url; //really it's 'xml'
 
 		var elt = document.createElement('div');
@@ -3690,12 +3695,11 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			
 			mxEvent.addGestureListeners(elt, mxUtils.bind(this, function(evt)
 			{
-				selectElement(elt, null, null, url, infoObj, clibs);
+				selectElement(elt, url, null, url, infoObj, clibs);
 			}), null, null);
 			
 			mxEvent.addListener(elt, 'dblclick', function(evt)
 			{
-				console.log('before create call')
 				create();
 				mxEvent.consume(evt);
 			});
