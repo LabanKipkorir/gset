@@ -2057,7 +2057,6 @@ var ParseDialog = function(editorUi, title, defaultType)
 	var plantUmlExample = '@startuml\nskinparam shadowing false\nAlice -> Bob: Authentication Request\nBob --> Alice: Authentication Response\n\n' +
 		'Alice -> Bob: Another authentication Request\nAlice <-- Bob: Another authentication Response\n@enduml';
 	var insertPoint = editorUi.editor.graph.getFreeInsertPoint();
-
 	function parse(text, type, evt)
 	{
 		var lines = text.split('\n');
@@ -2872,6 +2871,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	
 	var nameInput = document.createElement('input');
 	nameInput.setAttribute('value', editorUi.defaultFilename + ext);
+
 	nameInput.style.marginLeft = '10px';
 	nameInput.style.width = (compact || smallScreen) ? '144px' : '244px';
 	
@@ -2880,7 +2880,6 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		if (showName)
 		{
 			nameInput.focus();
-			
 			if (mxClient.IS_GC || mxClient.IS_FF || document.documentMode >= 5)
 			{
 				nameInput.select();
@@ -2891,10 +2890,8 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			}
 		}
 		
-		if (div.parentNode != null && div.parentNode.parentNode != null)
-		{
-			mxEvent.addGestureListeners(div.parentNode.parentNode, mxUtils.bind(this, function(evt)
-			{
+		if (div.parentNode != null && div.parentNode.parentNode != null) {
+			mxEvent.addGestureListeners(div.parentNode.parentNode, mxUtils.bind(this, function (evt) {
 				editorUi.sidebar.hideTooltip();
 			}), null, null);
 		}
@@ -2929,9 +2926,9 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			}
 		}
 	}
-
 	var hasTabs = false;
 	var i0 = 0;
+	var templateXmlMarkup = '';
 	
 	// Dynamic loading
 	function addTemplates(smallSize)
@@ -2949,10 +2946,9 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			while (i0 < templates.length && (first || mxUtils.mod(i0, 19) != 0))
 			{
 				var tmp = templates[i0++];
-				console.log(tmp)
 				//var btn = addButton();
-				var btn = addButton(tmp.xml, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
-					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs);
+				var btn = addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
+					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs, tmp.xml);
 				
 				if (first)
 				{
@@ -3029,7 +3025,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 
 					if (url != null)
 					{
-						selectElement(elt, null, null, url, infoObj, clibs);
+						selectElement(elt, xml, null, url, infoObj, clibs);
 					}
 				}, true, false);
 		}
@@ -3411,7 +3407,29 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	
 	function create()
 	{
-		if (templateExtUrl && openExtDocCallback != null)
+		var i = 0;
+		var xml = '';
+		var iscset = false;
+		while (i < templates.length)
+		{
+			tmp = templates[i];
+			if (tmp.select)
+			{
+				xml = tmp.xml;
+			}
+			i++;
+		}
+		if (xml != null) {
+			const csetfile = editorUi.getCurrentFile();
+			//if (csetfile) {
+
+				csetfile.setFileData(xml, () => {
+					editorUi.hideDialog();
+				});
+			//}
+		}
+		//
+		else if (templateExtUrl && openExtDocCallback != null)
 		{
 			if (!showName)
 			{
@@ -3432,7 +3450,6 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		else
 		{
 			var title = nameInput.value;
-				
 			if (title != null && title.length > 0)
 			{
 				editorUi.pickFolder(editorUi.mode, function(folderId)
@@ -3543,12 +3560,31 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 
 	function selectElement(elt, xml, libs, extUrl, infoObj, clibs, realUrl)
 	{
+		
+
 		if (selectedElt != null)
 		{
 			selectedElt.style.backgroundColor = 'transparent';
 			selectedElt.style.border = '1px solid transparent';
 		}
-		
+
+		var counter = 0;
+		while (counter < templates.length)
+		{
+			var tmp = templates[counter];
+			if (elt.hasAttribute('title') && elt.getAttribute('title') == tmp.title)
+			{
+				tmp.select = true;
+			}
+			else
+			{
+				tmp.select = false;
+			}
+
+			templates[counter] = tmp;
+			counter++;
+		}
+
 		createButton.removeAttribute('disabled');
 		
 		templateXml = xml;
@@ -3563,17 +3599,15 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		selectedElt.style.border = rightHighlightBorder;
 	};
 	
-	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg, clibs)
+	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg, clibs, xml)
 	{
-		var xmlStuff = url; //really it's 'xml'
-
 		var elt = document.createElement('div');
 		elt.className = 'geTemplate geAdaptiveAsset';
 		elt.style.position = 'relative';
 		elt.style.height = w + 'px';
 		elt.style.width = h + 'px';
 		elt.style.border = '1px solid transparent';
-		var xmlData = url, realUrl = url;
+		var xmlData = xml, realUrl = url;
 		
 		if (title != null)
 		{
@@ -3690,12 +3724,11 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			
 			mxEvent.addGestureListeners(elt, mxUtils.bind(this, function(evt)
 			{
-				selectElement(elt, null, null, url, infoObj, clibs);
+				selectElement(elt, xml, null, url, infoObj, clibs);
 			}), null, null);
 			
 			mxEvent.addListener(elt, 'dblclick', function(evt)
 			{
-				console.log('before create call')
 				create();
 				mxEvent.consume(evt);
 			});
@@ -4005,10 +4038,10 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	
 	function initUi()
 	{
+		
 		if (firstInitUi)
 		{
 			firstInitUi = false;
-			
 			mxEvent.addListener(div, 'scroll', function(evt)
 			{
 				if (div.scrollTop + div.clientHeight >= div.scrollHeight)
@@ -4121,7 +4154,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 				}
 			});
 		};
-			
+
 		for (var cat in categories)
 		{
 			if (categories[cat].content != null)
@@ -4139,7 +4172,8 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			else
 			{
 				var subCats = subCategories[cat];
-				var entry = document.createElement(subCats? 'ul' : 'div');
+				var entry = document.createElement(subCats ? 'ul' : 'div');
+
 				var clickElem = entry;
 				var templateList = categories[cat];
 				var entryTitle = getEntryTitle(cat, templateList);
@@ -4205,7 +4239,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 				}
 
 				list.appendChild(entry);
-				
+
 				if (currentEntry == null && templateList.length > 0)
 				{
 					currentEntry = entry;
@@ -4219,6 +4253,12 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		
 		addTemplates(false);
 	};
+
+	// purpose is to allow a blank diagram to immediately pop the template dialog
+	// if this breaks other stuff, we'll deal with it then
+	if (compact.hideFromTemplateUrl = true) {
+		compact = false;
+	}
 
 	if (!compact)
 	{
@@ -4246,139 +4286,13 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 				}
 				addTemplates(categories[category]);
 			}
-			else
-			{
-				//for (const tmplt of csetTemplates) {
-				//	categories[category].push({
-				//		iscset: true,
-				//		xml: tmplt.markup,
-				//		title: tmplt.name.trim(),
-				//		tooltip: tmplt.name.trim(),
-				//		select: csetTemplates[0] === tmplt,
-				//		imgUrl: tmplt.imageSource && `'data: image/png;base64,${tmplt.imageSource}'`
-				//	});
-				//}
-				//addTemplates(categories[category]);
-			}
+			
 			spinner.stop();
 			initUi();
 		};
 
 		spinner.spin(div);
 		//loadCsetTemplates();
-		
-		/*
-		function loadDrawioTemplates()
-		{
-			mxUtils.get(realUrl, function(req)
-			{
-				// Workaround for index loaded 3 times in iOS offline mode
-				if (!indexLoaded)
-				{
-					indexLoaded = true;
-					var tmpDoc = req.getXml();
-					var node = tmpDoc.documentElement.firstChild;
-					var clibs = {};
-		
-					while (node != null)
-					{
-						if (typeof(node.getAttribute) !== 'undefined')
-						{
-							if (node.nodeName == 'clibs')
-							{
-								var name = node.getAttribute('name');
-								var adds = node.getElementsByTagName('add');
-								var temp = [];
-								
-								for (var i = 0; i < adds.length; i++)
-								{
-									temp.push(encodeURIComponent(mxUtils.getTextContent(adds[i])));
-								}
-								
-								if (name != null && temp.length > 0)
-								{
-									clibs[name] = temp.join(';');
-								}
-							}
-							else
-							{
-								var url = node.getAttribute('url');
-								
-								if (url != null)
-								{
-									var category = node.getAttribute('section');
-									var subCategory = node.getAttribute('subsection');
-									
-									if (category == null)
-									{
-										var slash = url.indexOf('/');
-										category = url.substring(0, slash);
-										
-										if (subCategory == null)
-										{
-											var nextSlash = url.indexOf('/', slash + 1);
-											
-											if (nextSlash > -1)
-											{
-												subCategory = url.substring(slash + 1, nextSlash);
-											}
-										}
-									}
-									
-									var list = categories[category];
-									
-									if (list == null)
-									{
-										list = [];
-										categories[category] = list;
-									}
-									
-									var tempLibs = node.getAttribute('clibs');
-									
-									if (clibs[tempLibs] != null)
-									{
-										tempLibs = clibs[tempLibs];
-									}
-									
-									var tempObj = {url: node.getAttribute('url'), libs: node.getAttribute('libs'),
-										title: node.getAttribute('title'), tooltip: node.getAttribute('name') || node.getAttribute('url'),
-										preview: node.getAttribute('preview'), clibs: tempLibs, tags: node.getAttribute('tags')};
-									list.push(tempObj);
-										
-									if (subCategory != null)
-									{
-										var subCats = subCategories[category];
-										
-										if (subCats == null)
-										{
-											subCats = {};
-											subCategories[category] = subCats;
-										}
-										
-										var subCatList = subCats[subCategory];
-										
-										if (subCatList == null)
-										{
-											subCatList = [];
-											subCats[subCategory] = subCatList;
-										}
-										
-										subCatList.push(tempObj);
-									}
-								}
-							}
-						}
-						
-						node = node.nextSibling;
-					}
-					
-				
-				spinner.stop();
-					initUi();
-				}
-			});
-		};
-		*/
 		//spinner.spin(div);
 		
 		if (customTempCallback != null)
@@ -5084,7 +4998,7 @@ CreateDialog.showDownloadButton = urlParams['noDevice'] != '1';
 var PopupDialog = function(editorUi, url, pre, fallback, hideDialog) 
 {
 	hideDialog = (hideDialog != null) ? hideDialog : true;
-	
+
 	var div = document.createElement('div');
 	div.style.textAlign = 'left';
 	div.style.height = '100%';
@@ -9613,7 +9527,7 @@ var LibraryDialog = function(editorUi, name, library, initialImages, file, mode)
 	var graph = editorUi.editor.graph;
 	var outer = document.createElement('div');
 	outer.style.height = '100%';
-	
+
 	var header = document.createElement('div');
 	header.style.whiteSpace = 'nowrap';
 	header.style.height = '40px';
@@ -10976,7 +10890,7 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 	
 	function createPreview(diagram, elt, img, evt)
 	{
-		var xmlData = null;
+		var xmlData = xml;
 		
 		function loadXmlData(url, callback)
 		{
@@ -10992,7 +10906,7 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 				{
 					realUrl = TEMPLATE_PATH + '/' + realUrl;
 				}
-				
+
 				mxUtils.get(realUrl, mxUtils.bind(this, function(req)
 				{
 					if (req.getStatus() >= 200 && req.getStatus() <= 299)
@@ -11144,6 +11058,7 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 		if (currentItemInfo != null)
 		{
 			var itemInfo = currentItemInfo;
+
 			//disable create button
 			currentItemInfo = null;
 
@@ -11491,7 +11406,6 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 		swapActiveItem();
 		var oneRowCount = Math.floor(newDiagramCatList.offsetWidth / 150) - 1;
 		var catCount = !showAll && newDiagramCats.length > oneRowCount ? oneRowCount : newDiagramCats.length;
-		
 		for (var i = 0; i < catCount; i++)
 		{
 			var cat = newDiagramCats[i];
@@ -11619,7 +11533,6 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 	function fillTemplatesList(categories, customCats, customCatCount)
 	{
 		var list = dlgDiv.querySelector(".geTemplatesList");
-		
 		function getEntryTitle(cat, templateList)
 		{
 			var label = mxResources.get(cat, null, cat.substring(0, 1).
