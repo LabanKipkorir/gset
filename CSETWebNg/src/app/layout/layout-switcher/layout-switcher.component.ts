@@ -21,29 +21,24 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
-import { AssessmentService } from '../../../services/assessment.service';
-import { NavigationService } from '../../../services/navigation/navigation.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-analysis',
-  templateUrl: './analysis.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+    selector: 'layout-switcher',
+    templateUrl: './layout-switcher.component.html',
+    encapsulation: ViewEncapsulation.None,
+    // tslint:disable-next-line:use-host-property-decorator
+    host: { class: 'h-100' }
 })
-export class AnalysisComponent implements OnInit {
-  constructor(
-    private assessSvc: AssessmentService,
-    private navSvc: NavigationService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { this.assessSvc.currentTab = 'results'; }
+
+export class LayoutSwitcherComponent implements OnInit {
+  installationMode: string;
+
+  constructor(private configSvc: ConfigService) {}
 
   ngOnInit() {
-    this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
-      this.router.navigate([value], { relativeTo: this.route.parent });
-    });
-    this.router.navigate(['dashboard'], { relativeTo: this.route.parent });
+    this.installationMode = this.configSvc.installationMode;
   }
+
 }
