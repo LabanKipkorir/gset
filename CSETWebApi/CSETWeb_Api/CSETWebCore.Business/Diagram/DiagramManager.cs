@@ -870,6 +870,55 @@ namespace CSETWebCore.Business.Diagram
         }
 
 
+        /// <summary>
+        /// Sets the label of a component in the diagram XML 
+        /// and in the assessment's component inventory.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="type"></param>
+        public void UpdateComponentLabel(int assessmentId, string guid, string label)
+        {
+            //var componentGuid = Guid.Parse(guid);
+            //var adc = _context.ASSESSMENT_DIAGRAM_COMPONENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.Component_Guid == componentGuid);
+
+            //if (adc == null || label == null)
+            //{
+            //    // I was fed something I can't update; do nothing
+            //    return;
+            //}
+
+            //// change the label of the component
+            //adc.label = label;
+
+            //// Update the image in the diagram markup for the component
+            //var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            //var xDiagram = new XmlDocument();
+            //xDiagram.LoadXml(assessment.Diagram_Markup);
+            //var userObject = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid='{componentGuid}']");
+            //userObject.Attributes["label"].Value = label;
+
+            ////var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//object[@ComponentGuid='{componentGuid}']/mxCell");
+            //if (mxCell == null)
+            //{
+            //    return;
+            //}
+
+            //// change the image path and size in the cell style
+            ////var newStyle = this.SetImage(symbol.Component_Symbol_Id, mxCell.Attributes["style"].InnerText);
+            ////mxCell.SetAttribute("style", newStyle);
+
+            ////var geometry = (XmlElement)mxCell.SelectSingleNode("mxGeometry");
+            ////geometry.SetAttribute("width", symbol.Width.ToString());
+            ////geometry.SetAttribute("height", symbol.Height.ToString());
+
+            //assessment.Diagram_Markup = xDiagram.OuterXml;
+
+            //_context.SaveChanges();
+            return;
+        }
+
+
         public string SetImage(int Component_Symbol_Id, string style)
         {
             var symbols = this.GetAllComponentSymbols();
