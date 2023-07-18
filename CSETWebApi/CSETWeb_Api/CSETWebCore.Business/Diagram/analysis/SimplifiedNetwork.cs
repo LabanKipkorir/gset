@@ -70,9 +70,21 @@ namespace CSETWebCore.Business.BusinessManagers.Diagram.analysis
             //to extract minimal spanning tree(s)
             //then walk the tree to evaluate node rules
 
+            //for the XmlNodeLists, use the '/object' ones for diagram-orig, and '/UserObject' for the WIP diagram
             XmlNodeList objectNodes = xDoc.SelectNodes("/mxGraphModel/root/object[not(@redDot)]");
+            if (objectNodes.Count == 0 )
+            {
+                objectNodes = xDoc.SelectNodes("/mxGraphModel/root/UserObject[not(@redDot)]");
+            }
+
             XmlNodeList zoneNodes = xDoc.SelectNodes("//*[@zone=\"1\"]");
+            
             XmlNodeList mxCellLinkObjects = xDoc.SelectNodes("/mxGraphModel/root/object[mxCell/@edge='1']");
+            if (mxCellLinkObjects.Count == 0)
+            {
+                mxCellLinkObjects = xDoc.SelectNodes("/mxGraphModel/root/UserObject[mxCell/@edge='1']");
+            }
+
             XmlNodeList mxCellLinks = xDoc.SelectNodes("//*[@edge=\"1\"]");
             
             XmlNodeList mxCellLayers = xDoc.SelectNodes("//*[@parent=\"0\" and @id]");
